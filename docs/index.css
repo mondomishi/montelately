@@ -41,22 +41,25 @@ html {
 #main {
   flex-grow: 1;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: space-evenly;
 }
 
-#pity-the-fool-link {
+.album-link {
   display: flex;
   flex-direction: column;
   align-items: center;
   color: #0202ee;
+  margin: 0 36px;
+  margin-bottom: 20px;
 }
 
-#pity-the-fool-link:hover {
+.album-link:hover {
   color: #ff14b0;
 }
 
-#pity-the-fool-pic {
+.album-pic {
   max-width: 500px;
 }
 
@@ -66,7 +69,6 @@ html {
 }
 
 #logo-wrapper {
-  margin-top: 20px;
   margin-bottom: 4px;
   height: 33px;
   display: flex;
@@ -125,7 +127,12 @@ html {
     margin-left: 24px;
   }
 
-  #pity-the-fool-pic {
+  .album-link {
+    margin: 0;
+    margin-bottom: 20px;
+  }
+
+  .album-pic {
     min-width: 100vw;
   }
 
