@@ -22,8 +22,13 @@ html {
 }
 
 #header {
+  padding-bottom: 24px;
+}
+
+#top-line {
   display: flex;
   padding: 36px;
+  padding-bottom: 24px;
 }
 
 #profile-pic {
@@ -102,6 +107,7 @@ html {
 #icons {
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .icon-link {
@@ -119,7 +125,7 @@ html {
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
 @media (max-width: 600px) {
-  #header {
+  #top-line {
     padding: 24px;
   }
 
