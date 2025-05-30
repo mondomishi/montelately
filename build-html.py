@@ -1,4 +1,75 @@
-<!DOCTYPE html>
+#!/usr/bin/env python3
+
+from typing import NamedTuple
+from datetime import datetime
+
+NEWLINE = "\n"
+THIS_YEAR = datetime.now().year
+
+
+class MusicRelease(NamedTuple):
+    title: str
+    stub: str
+    imgExt: str
+    imgAltBit: str
+    spotifyUrl: str
+    appleMusicUrl: str
+    youtubeUrl: str
+
+    def getFullResImgUrl(self):
+        return f"https://montelately.com/images/{self.stub}.{self.imgExt}"
+
+    def getFfmLink(self):
+        return f"https://ffm.to/monte-lately-{self.stub}"
+
+    def getImgAlt(self):
+        return f"Cover art for {self.title} by Monte Lately. {self.imgAltBit}"
+
+    def getHtml(self):
+        return f"""      <a class="album-link" target="_blank" rel="noopener noreferrer" href="{self.getFfmLink()}">
+        <img
+          class="album-pic"
+          alt="{self.getImgAlt()}"
+          src="images/{self.stub}-512.jpg"
+          srcset="images/{self.stub}-1024.jpg 1024w, images/{self.stub}-2048.jpg 2048w"
+        />
+        <div id="quip">Listen to {self.title}</div>
+      </a>"""
+
+
+MUSIC_RELEASES = [
+    MusicRelease(
+        title="Taste Like Silence",
+        stub="taste-like-silence",
+        imgExt="jpg",
+        imgAltBit="Monte Lately sitting at a table next to a piano in candlelight.",
+        spotifyUrl="https://open.spotify.com/album/6q18XGz5DtWSEmoRQBliyI",
+        appleMusicUrl="https://music.apple.com/us/album/taste-like-silence-single/1811089014",
+        youtubeUrl="https://www.youtube.com/watch?v=yce2sg-MVrU&list=OLAK5uy_m9MnYcLbcbChSTuvBDj9QUcTVQXHo1FP8",
+    ),
+    MusicRelease(
+        title="Fever Dreams",
+        stub="fever-dreams",
+        imgExt="jpg",
+        imgAltBit="Monte Lately sitting on the sidewalk next to an electric guitar at night.",
+        spotifyUrl="https://open.spotify.com/album/2uFNJ6zvpOldkspoDV7upj",
+        appleMusicUrl="https://music.apple.com/us/album/fever-dreams-single/1807893783",
+        youtubeUrl="https://www.youtube.com/watch?v=xdbe_peE_MY&list=OLAK5uy_m6zluw9e7rTVgcQUamBf5J_QLh6UgQKLk",
+    ),
+    MusicRelease(
+        title="Pity The Fool",
+        stub="pity-the-fool",
+        imgExt="jpg",
+        imgAltBit="Monte Lately laying in bed, overwhelmed.",
+        spotifyUrl="https://open.spotify.com/album/4YIQsx0SlI0dI1lnxm7CsR",
+        appleMusicUrl="https://music.apple.com/us/album/pity-the-fool-single/1801171547",
+        youtubeUrl="https://www.youtube.com/watch?v=pi9teLsKcxk&list=OLAK5uy_kv3oQIMdG3BPbsdbb_84Y14Q4f_7aqAZY",
+    ),
+]
+LATEST_RELEASE = MUSIC_RELEASES[0]
+
+PAGE_DESCRIPTION = f"Music by Monte Lately. Listen to {LATEST_RELEASE.title} now, available everywhere."
+HTML_OUT = f"""<!DOCTYPE html>
 <html>
   <head>
     <title>Monte Lately</title>
@@ -6,14 +77,14 @@
     <meta charset="utf-8" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Monte Lately" />
-    <meta property="og:description" content="Music by Monte Lately. Listen to Taste Like Silence now, available everywhere." />
-    <meta name="description" content="Music by Monte Lately. Listen to Taste Like Silence now, available everywhere." />
+    <meta property="og:description" content="{PAGE_DESCRIPTION}" />
+    <meta name="description" content="{PAGE_DESCRIPTION}" />
     <meta property="og:url" content="https://montelately.com" />
     <link rel="canonical" href="https://montelately.com" />
     <meta property="og:site_name" content="Monte Lately" />
-    <meta property="og:image" content="https://montelately.com/images/taste-like-silence.jpg" />
-    <meta property="og:image:secure_url" content="https://montelately.com/images/taste-like-silence.jpg" />
-    <meta property="og:image:alt" content="Cover art for Taste Like Silence by Monte Lately. Monte Lately sitting at a table next to a piano in candlelight." />
+    <meta property="og:image" content="{LATEST_RELEASE.getFullResImgUrl()}" />
+    <meta property="og:image:secure_url" content="{LATEST_RELEASE.getFullResImgUrl()}" />
+    <meta property="og:image:alt" content="{LATEST_RELEASE.getImgAlt()}" />
     <link rel="icon" href="favicon.ico" />
     <link rel="stylesheet" href="normalize.css" />
     <link rel="stylesheet" href="index.css" />
@@ -30,33 +101,7 @@
       <h1 id="title">Monte Lately</h1>
     </header>
     <main id="main">
-      <a class="album-link" target="_blank" rel="noopener noreferrer" href="https://ffm.to/monte-lately-taste-like-silence">
-        <img
-          class="album-pic"
-          alt="Cover art for Taste Like Silence by Monte Lately. Monte Lately sitting at a table next to a piano in candlelight."
-          src="images/taste-like-silence-512.jpg"
-          srcset="images/taste-like-silence-1024.jpg 1024w, images/taste-like-silence-2048.jpg 2048w"
-        />
-        <div id="quip">Listen to Taste Like Silence</div>
-      </a>
-      <a class="album-link" target="_blank" rel="noopener noreferrer" href="https://ffm.to/monte-lately-fever-dreams">
-        <img
-          class="album-pic"
-          alt="Cover art for Fever Dreams by Monte Lately. Monte Lately sitting on the sidewalk next to an electric guitar at night."
-          src="images/fever-dreams-512.jpg"
-          srcset="images/fever-dreams-1024.jpg 1024w, images/fever-dreams-2048.jpg 2048w"
-        />
-        <div id="quip">Listen to Fever Dreams</div>
-      </a>
-      <a class="album-link" target="_blank" rel="noopener noreferrer" href="https://ffm.to/monte-lately-pity-the-fool">
-        <img
-          class="album-pic"
-          alt="Cover art for Pity The Fool by Monte Lately. Monte Lately laying in bed, overwhelmed."
-          src="images/pity-the-fool-512.jpg"
-          srcset="images/pity-the-fool-1024.jpg 1024w, images/pity-the-fool-2048.jpg 2048w"
-        />
-        <div id="quip">Listen to Pity The Fool</div>
-      </a>
+{NEWLINE.join(rel.getHtml() for rel in MUSIC_RELEASES)}
     </main>
     <footer id="footer">
       <div id="logo-wrapper">
@@ -68,7 +113,7 @@
         </svg>
       </div>
       <div id="bottom-line">
-        <div id="copywrite">© 2025 Monte Lately. All Rights Reserved.</div>
+        <div id="copywrite">© {THIS_YEAR} Monte Lately. All Rights Reserved.</div>
         <div id="icons">
           <a class="icon-link" target="_blank" rel="noopener noreferrer" href="https://tiktok.com/@montelately">
             <svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M448 209.9a210.1 210.1 0 0 1 -122.8-39.3V349.4A162.6 162.6 0 1 1 185 188.3V278.2a74.6 74.6 0 1 0 52.2 71.2V0l88 0a121.2 121.2 0 0 0 1.9 22.2h0A122.2 122.2 0 0 0 381 102.4a121.4 121.4 0 0 0 67 20.1z"/></svg>
@@ -82,15 +127,15 @@
             <svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64h98.2V334.2H109.4V256h52.8V222.3c0-87.1 39.4-127.5 125-127.5c16.2 0 44.2 3.2 55.7 6.4V172c-6-.6-16.5-1-29.6-1c-42 0-58.2 15.9-58.2 57.2V256h83.6l-14.4 78.2H255V480H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64z"/></svg>
             <span class="hidden-icon-label">Facebook</span>
           </a>
-          <a class="icon-link" target="_blank" rel="noopener noreferrer" href="https://open.spotify.com/album/6q18XGz5DtWSEmoRQBliyI">
+          <a class="icon-link" target="_blank" rel="noopener noreferrer" href="{LATEST_RELEASE.spotifyUrl}">
             <svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path fill="currentColor" d="M248 8C111.1 8 0 119.1 0 256s111.1 248 248 248 248-111.1 248-248S384.9 8 248 8zm100.7 364.9c-4.2 0-6.8-1.3-10.7-3.6-62.4-37.6-135-39.2-206.7-24.5-3.9 1-9 2.6-11.9 2.6-9.7 0-15.8-7.7-15.8-15.8 0-10.3 6.1-15.2 13.6-16.8 81.9-18.1 165.6-16.5 237 26.2 6.1 3.9 9.7 7.4 9.7 16.5s-7.1 15.4-15.2 15.4zm26.9-65.6c-5.2 0-8.7-2.3-12.3-4.2-62.5-37-155.7-51.9-238.6-29.4-4.8 1.3-7.4 2.6-11.9 2.6-10.7 0-19.4-8.7-19.4-19.4s5.2-17.8 15.5-20.7c27.8-7.8 56.2-13.6 97.8-13.6 64.9 0 127.6 16.1 177 45.5 8.1 4.8 11.3 11 11.3 19.7-.1 10.8-8.5 19.5-19.4 19.5zm31-76.2c-5.2 0-8.4-1.3-12.9-3.9-71.2-42.5-198.5-52.7-280.9-29.7-3.6 1-8.1 2.6-12.9 2.6-13.2 0-23.3-10.3-23.3-23.6 0-13.6 8.4-21.3 17.4-23.9 35.2-10.3 74.6-15.2 117.5-15.2 73 0 149.5 15.2 205.4 47.8 7.8 4.5 12.9 10.7 12.9 22.6 0 13.6-11 23.3-23.2 23.3z"/></svg>
             <span class="hidden-icon-label">Spotify</span>
           </a>
-          <a class="icon-link" target="_blank" rel="noopener noreferrer" href="https://music.apple.com/us/album/taste-like-silence-single/1811089014">
+          <a class="icon-link" target="_blank" rel="noopener noreferrer" href="{LATEST_RELEASE.appleMusicUrl}">
             <svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M381.9 388.2c-6.4 27.4-27.2 42.8-55.1 48-24.5 4.5-44.9 5.6-64.5-10.2-23.9-20.1-24.2-53.4-2.7-74.4 17-16.2 40.9-19.5 76.8-25.8 6-1.1 11.2-2.5 15.6-7.4 6.4-7.2 4.4-4.1 4.4-163.2 0-11.2-5.5-14.3-17-12.3-8.2 1.4-185.7 34.6-185.7 34.6-10.2 2.2-13.4 5.2-13.4 16.7 0 234.7 1.1 223.9-2.5 239.5-4.2 18.2-15.4 31.9-30.2 39.5-16.8 9.3-47.2 13.4-63.4 10.4-43.2-8.1-58.4-58-29.1-86.6 17-16.2 40.9-19.5 76.8-25.8 6-1.1 11.2-2.5 15.6-7.4 10.1-11.5 1.8-256.6 5.2-270.2 .8-5.2 3-9.6 7.1-12.9 4.2-3.5 11.8-5.5 13.4-5.5 204-38.2 228.9-43.1 232.4-43.1 11.5-.8 18.1 6 18.1 17.6 .2 344.5 1.1 326-1.8 338.5z"/></svg>
             <span class="hidden-icon-label">Apple Music</span>
           </a>
-          <a class="icon-link" target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/watch?v=yce2sg-MVrU&list=OLAK5uy_m9MnYcLbcbChSTuvBDj9QUcTVQXHo1FP8">
+          <a class="icon-link" target="_blank" rel="noopener noreferrer" href="{LATEST_RELEASE.youtubeUrl}">
             <svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M549.7 124.1c-6.3-23.7-24.8-42.3-48.3-48.6C458.8 64 288 64 288 64S117.2 64 74.6 75.5c-23.5 6.3-42 24.9-48.3 48.6-11.4 42.9-11.4 132.3-11.4 132.3s0 89.4 11.4 132.3c6.3 23.7 24.8 41.5 48.3 47.8C117.2 448 288 448 288 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zm-317.5 213.5V175.2l142.7 81.2-142.7 81.2z"/></svg>
             <span class="hidden-icon-label">Youtube</span>
           </a>
@@ -103,3 +148,7 @@
     </footer>
   </div></body>
 </html>
+"""
+
+with open("./docs/index.html", "w") as outFile:
+    outFile.write(HTML_OUT)
