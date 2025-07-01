@@ -39,6 +39,15 @@ class MusicRelease(NamedTuple):
 
 MUSIC_RELEASES = [
     MusicRelease(
+        title="I'm Tired Of Singing Sad Songs",
+        stub="im-tired-of-singing-sad-songs",
+        imgExt="jpg",
+        imgAltBit="Monte Lately looking into a beam of light, with birds flying superimposed over.",
+        spotifyUrl="https://open.spotify.com/album/3nvv6Am8bYePS491cbTcU8",
+        appleMusicUrl="https://music.apple.com/us/album/im-tired-of-singing-sad-songs-single/1823595836",
+        youtubeUrl="https://www.youtube.com/watch?v=9Q9PNFotOmQ&list=OLAK5uy_na2Bn9_ocRyINYiIa6HV_JMuFt4OgouLU",
+    ),
+    MusicRelease(
         title="Taste Like Silence",
         stub="taste-like-silence",
         imgExt="jpg",
