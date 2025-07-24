@@ -25,19 +25,41 @@ class MusicRelease(NamedTuple):
     def getImgAlt(self):
         return f"Cover art for {self.title} by Monte Lately. {self.imgAltBit}"
 
-    def getHtml(self):
-        return f"""      <a class="album-link" target="_blank" rel="noopener noreferrer" href="{self.getFfmLink()}">
+    def getLatestReleaseHtml(self):
+        return f"""<a class="release-link-base release-link-latest" target="_blank" rel="noopener noreferrer" href="{self.getFfmLink()}">
         <img
-          class="album-pic"
+          class="release-pic-base release-pic-latest"
+          alt="{self.getImgAlt()}"
+          src="images/{self.stub}-1024.jpg"
+        />
+        <div class="release-quip-base release-quip-latest">
+          Listen to <i class="release-quip-title">{self.title}</i>
+        </div>
+      </a>"""
+
+    def getPastReleaseHtml(self):
+        return f"""      <a class="release-link-base release-link-past" target="_blank" rel="noopener noreferrer" href="{self.getFfmLink()}">
+        <img
+          class="release-pic-base release-pic-past"
           alt="{self.getImgAlt()}"
           src="images/{self.stub}-512.jpg"
-          srcset="images/{self.stub}-1024.jpg 1024w, images/{self.stub}-2048.jpg 2048w"
         />
-        <div id="quip">Listen to {self.title}</div>
+        <div class="release-quip-base release-quip-past">
+          <i class="release-quip-title">{self.title}</i>
+        </div>
       </a>"""
 
 
 MUSIC_RELEASES = [
+    MusicRelease(
+        title="Shut Up And Watch The Movie",
+        stub="shut-up-and-watch-the-movie",
+        imgExt="jpg",
+        imgAltBit="Looking over Monte Lately's shoulder as they look into a tv screen, seeing their face reflected in the screen.",
+        spotifyUrl="https://open.spotify.com/album/5KFqnA9KG5fG8yQ0VqN4Za",
+        appleMusicUrl="https://music.apple.com/us/album/shut-up-and-watch-the-movie-single/1828455075",
+        youtubeUrl="https://www.youtube.com/watch?v=xkuIiFpZyHY&list=OLAK5uy_nf1broyuwblAsFSEDwAJ3T6GhFPewlKV0",
+    ),
     MusicRelease(
         title="I'm Tired Of Singing Sad Songs",
         stub="im-tired-of-singing-sad-songs",
@@ -76,8 +98,9 @@ MUSIC_RELEASES = [
     ),
 ]
 LATEST_RELEASE = MUSIC_RELEASES[0]
+PAST_RELEASES = MUSIC_RELEASES[1:]
 
-ICONS_HTML = f"""<div id="icons">
+ICONS_HTML = f"""<div class="icons">
           <a class="icon-link" target="_blank" rel="noopener noreferrer" href="https://tiktok.com/@montelately">
             <svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M448 209.9a210.1 210.1 0 0 1 -122.8-39.3V349.4A162.6 162.6 0 1 1 185 188.3V278.2a74.6 74.6 0 1 0 52.2 71.2V0l88 0a121.2 121.2 0 0 0 1.9 22.2h0A122.2 122.2 0 0 0 381 102.4a121.4 121.4 0 0 0 67 20.1z"/></svg>
             <span class="hidden-icon-label">TikTok</span>
@@ -143,7 +166,10 @@ HTML_OUT = f"""<!DOCTYPE html>
       {ICONS_HTML}
     </header>
     <main id="main">
-      {NEWLINE.join(rel.getHtml() for rel in MUSIC_RELEASES)}
+      {LATEST_RELEASE.getLatestReleaseHtml()}
+      <div id="past-releases">
+{NEWLINE.join(rel.getPastReleaseHtml() for rel in PAST_RELEASES)}
+      </div>
     </main>
     <footer id="footer">
       <div id="logo-wrapper">
